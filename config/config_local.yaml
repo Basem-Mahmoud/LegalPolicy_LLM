@@ -1,0 +1,112 @@
+# Local LLM Configuration for Legal Policy Explainer
+# Version 0.3 - 100% Local, No API Calls
+
+# LLM Configuration (Ollama)
+llm:
+  provider: "ollama"
+  base_url: "http://localhost:11434"
+  model: "llama3.1:8b"  # Options: mistral:7b, llama3.1:8b, phi3:14b, llama3.1:70b
+  temperature: 0.3
+  max_tokens: 2000
+  timeout: 60  # seconds
+
+  # Alternative models (comment/uncomment as needed)
+  # model: "mistral:7b"     # Faster, lighter (4.1GB)
+  # model: "phi3:14b"       # Good balance (7.9GB)
+  # model: "llama3.1:70b"   # Best quality (40GB, requires 64GB RAM)
+
+# Embeddings Configuration
+embeddings:
+  model: "all-mpnet-base-v2"  # Sentence-transformers model
+  # Alternative: "all-MiniLM-L6-v2" (faster, smaller)
+  # Alternative: "BAAI/bge-large-en-v1.5" (best quality, slower)
+  device: "cpu"  # Options: "cpu", "cuda" (if GPU available)
+  batch_size: 32
+  normalize: true
+  dimension: 768  # for all-mpnet-base-v2
+
+# Vector Store Configuration (ChromaDB)
+vector_store:
+  provider: "chromadb"
+  persist_directory: "data/chroma_db"
+  collection_name: "legal_documents"
+  distance_metric: "cosine"  # Options: cosine, l2, ip
+
+# RAG Configuration
+rag:
+  enabled: true
+  chunk_size: 500
+  chunk_overlap: 100
+  top_k: 5  # Number of documents to retrieve
+  similarity_threshold: 0.7  # Minimum similarity score (0-1)
+  max_context_length: 3000  # Max tokens for context
+  rerank: false  # Set true if using cross-encoder reranking
+
+# Query Router Configuration
+query_router:
+  enabled: true
+  use_llm_classification: true  # Use LLM for query classification
+
+  # Complexity thresholds
+  simple_keywords: ["define", "what is", "meaning", "definition", "explain briefly"]
+  complex_keywords: ["analyze", "compare", "evaluate", "implications", "in depth"]
+
+  # Route mapping
+  routes:
+    simple: "definition_lookup"
+    medium: "rag_pipeline"
+    complex: "full_pipeline"
+
+# Agent Configuration (Unified Agent)
+agent:
+  name: "unified_legal_assistant"
+  max_iterations: 1  # Single-pass for efficiency
+  enable_tools: true
+  enable_memory: false  # Can enable for multi-turn conversations
+
+  # Tool configuration
+  tools:
+    - "search_legal_documents"
+    - "lookup_definition"
+    - "search_statute"
+
+# Safety & Ethics
+safety:
+  enable_filter: true
+  blocked_topics:
+    - "personal legal advice"
+    - "medical advice"
+    - "financial advice"
+  require_disclaimer: true
+  disclaimer_text: |
+    ⚖️ Disclaimer: This is an educational tool.
+    Not a substitute for professional legal advice.
+    Consult a licensed attorney for legal matters.
+
+# Document Processing
+documents:
+  supported_formats: [".pdf", ".txt", ".docx"]
+  data_directory: "data/documents"
+
+# Performance Tuning
+performance:
+  enable_caching: false  # Can enable for repeated queries
+  streaming: false  # Set true for streaming responses
+  max_retries: 2
+  retry_delay: 1  # seconds
+
+# Logging
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  file: "logs/app.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  console_output: true
+
+# Evaluation
+evaluation:
+  test_cases_path: "data/test_cases"
+  metrics:
+    - "correctness"
+    - "clarity"
+    - "relevance"
+    - "safety"

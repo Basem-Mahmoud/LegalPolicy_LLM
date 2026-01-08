@@ -1,0 +1,13 @@
+CONTRACT DEFINITION
+
+A contract is a legally binding agreement between two or more parties that creates
+mutual obligations enforceable by law. The basic elements of a contract include:
+
+1. Offer: One party makes a clear proposal
+2. Acceptance: The other party agrees to the terms
+3. Consideration: Something of value is exchanged
+4. Legal capacity: Parties are legally able to enter the contract
+5. Legal purpose: The contract's purpose is lawful
+
+Contracts can be written, oral, or implied by conduct. However, certain types
+of contracts must be in writing to be enforceable under the Statute of Frauds.

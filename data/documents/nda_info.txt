@@ -1,0 +1,23 @@
+NON-DISCLOSURE AGREEMENT (NDA)
+
+A Non-Disclosure Agreement (NDA) is a legal contract between parties that
+outlines confidential information that the parties wish to share with each
+other for specific purposes, but want to restrict access to by third parties.
+
+Key Components:
+- Definition of confidential information
+- Obligations of the receiving party
+- Exceptions to confidentiality
+- Duration of the confidentiality obligation
+- Consequences of breach
+
+Types of NDAs:
+- Unilateral: One party discloses information
+- Bilateral/Mutual: Both parties share confidential information
+- Multilateral: Three or more parties are involved
+
+Common Uses:
+- Business partnerships
+- Employment relationships
+- Investor discussions
+- Vendor/supplier relationships

@@ -3,18 +3,13 @@ Document processor for legal documents.
 Handles loading, chunking, and preprocessing of various document formats.
 """
 
-import os
 from typing import List, Dict, Any
 from pathlib import Path
 import logging
 
 # Document loaders
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import (
-    PyPDFLoader,
-    TextLoader,
-    Docx2txtLoader
-)
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -41,7 +36,7 @@ class DocumentProcessor:
         self,
         chunk_size: int = 500,
         chunk_overlap: int = 50,
-        documents_path: str = "data/documents"
+        documents_path: str = "data/documents",
     ):
         """
         Initialize document processor.
@@ -59,13 +54,13 @@ class DocumentProcessor:
             chunk_size=chunk_size,
             chunk_overlap=chunk_overlap,
             length_function=len,
-            separators=["\n\n", "\n", ". ", " ", ""]
+            separators=["\n\n", "\n", ". ", " ", ""],
         )
 
         self.supported_extensions = {
             ".pdf": self._load_pdf,
             ".txt": self._load_txt,
-            ".docx": self._load_docx
+            ".docx": self._load_docx,
         }
 
     def load_documents(self) -> List[Document]:
@@ -156,10 +151,10 @@ class DocumentProcessor:
                     "file_path": str(file_path),
                     "page": i,
                     "chunk": j,
-                    "total_chunks": len(text_chunks)
+                    "total_chunks": len(text_chunks),
                 }
                 # Add any existing metadata from the loader
-                if hasattr(doc, 'metadata'):
+                if hasattr(doc, "metadata"):
                     metadata.update(doc.metadata)
 
                 chunks.append(Document(content=chunk_text, metadata=metadata))
@@ -181,11 +176,7 @@ class DocumentProcessor:
 
         chunks = []
         for i, chunk_text in enumerate(text_chunks):
-            metadata = {
-                "source": source,
-                "chunk": i,
-                "total_chunks": len(text_chunks)
-            }
+            metadata = {"source": source, "chunk": i, "total_chunks": len(text_chunks)}
             chunks.append(Document(content=chunk_text, metadata=metadata))
 
         return chunks

@@ -205,3 +205,25 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Project-specific
+# Vector database
+data/vector_db/
+*.chroma
+
+# Model checkpoints
+models/
+*.pt
+*.bin
+*.safetensors
+
+# Evaluation results
+data/test_cases/evaluation_results.json
+
+# Conversation logs
+data/conversations/
+
+# Large files
+*.pdf
+*.docx
+!data/documents/sample_legal_policies.txt

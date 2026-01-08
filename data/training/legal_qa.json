@@ -1,0 +1,52 @@
+[
+  {
+    "instruction": "Explain what a non-disclosure agreement is.",
+    "input": "",
+    "output": "A Non-Disclosure Agreement (NDA) is a legal contract between parties that outlines confidential information they wish to share for specific purposes while restricting access by third parties. The key elements of an NDA include: (1) Definition of what constitutes confidential information, (2) Obligations of the receiving party to keep information secret, (3) Exceptions to confidentiality (such as information already public), (4) Duration of the confidentiality obligation, and (5) Consequences if the agreement is breached. NDAs are commonly used in business partnerships, employment relationships, investor discussions, and vendor relationships to protect sensitive information like trade secrets, business strategies, or proprietary technology."
+  },
+  {
+    "instruction": "What does 'liability' mean in legal terms?",
+    "input": "",
+    "output": "In legal terms, 'liability' refers to legal responsibility or obligation. When someone is liable, they are legally responsible for something, typically for damages, costs, or consequences that result from their actions or failures. In contracts, liability clauses address: who is responsible if something goes wrong, what types of damages they're responsible for, any limits on that responsibility (limitation of liability), and situations where responsibility is excluded. For example, a software license might limit the company's liability for data loss, meaning they're not legally responsible beyond certain limits if you lose data while using their software. Liability can be contractual (based on a contract), tort-based (from civil wrongs), or statutory (defined by law)."
+  },
+  {
+    "instruction": "Explain the concept of 'force majeure'.",
+    "input": "",
+    "output": "Force majeure is a contract clause that frees parties from liability or obligation when an extraordinary event or circumstance beyond their control prevents them from fulfilling the contract. The term comes from French law and literally means 'superior force.' Force majeure events typically include: natural disasters (earthquakes, floods, hurricanes), wars and armed conflicts, terrorism, pandemics, government actions or regulations, and other 'acts of God' that make contract performance impossible or impractical. For a force majeure clause to apply, the event must generally be: unforeseeable at the time of contract formation, external to the parties, and make performance impossible (not just more difficult or expensive). The specific events covered and the remedies available depend on how the force majeure clause is written in the contract."
+  },
+  {
+    "instruction": "What is breach of contract?",
+    "input": "",
+    "output": "A breach of contract occurs when one party to a contract fails to fulfill their obligations under the agreement without a legal excuse. There are several types of breach: (1) Material breach - a substantial failure that goes to the heart of the contract, allowing the non-breaching party to terminate and sue for damages, (2) Minor breach - a less significant violation where the contract can continue but the non-breaching party may recover damages, (3) Anticipatory breach - when one party indicates in advance they won't fulfill their obligations. Remedies for breach may include: damages (monetary compensation), specific performance (forcing the breaching party to fulfill their obligations), cancellation and restitution (ending the contract and restoring parties to pre-contract position), or reformation (rewriting the contract to reflect true intentions). The appropriate remedy depends on the nature and severity of the breach."
+  },
+  {
+    "instruction": "What is intellectual property?",
+    "input": "",
+    "output": "Intellectual property (IP) refers to creations of the mind that have commercial value and are protected by law. The main types of intellectual property are: (1) Patents - protect inventions and grant exclusive rights to make, use, or sell the invention for a limited time (typically 20 years), (2) Copyrights - protect original works of authorship like books, music, software, and art, typically lasting the author's life plus 70 years, (3) Trademarks - protect brand names, logos, and symbols that distinguish goods or services in the marketplace, (4) Trade secrets - protect confidential business information that provides competitive advantage, like formulas or processes. IP law balances the rights of creators to benefit from their work with society's interest in accessing and building upon ideas. Different types of IP have different registration requirements, durations of protection, and enforcement mechanisms."
+  },
+  {
+    "instruction": "Explain what 'due process' means.",
+    "input": "",
+    "output": "Due process is a constitutional guarantee that ensures fair treatment through the normal judicial system. In the United States, it's protected by the Fifth Amendment (federal government) and Fourteenth Amendment (state governments). There are two types: (1) Procedural due process - requires fair procedures before the government can deprive someone of life, liberty, or property. This includes rights like notice of charges, opportunity to be heard, impartial decision-maker, and right to present evidence. (2) Substantive due process - protects certain fundamental rights from government interference regardless of procedures used, such as privacy, family relationships, and bodily autonomy. Due process ensures that laws are applied fairly and consistently, that individuals have opportunity to challenge government actions, and that the government cannot act arbitrarily. The specific requirements of due process vary depending on what's at stake and the context."
+  },
+  {
+    "instruction": "What is arbitration?",
+    "input": "",
+    "output": "Arbitration is an alternative dispute resolution method where parties agree to have their dispute decided by a neutral third party (arbitrator) instead of going to court. Key features include: (1) Private process - typically confidential unlike public court proceedings, (2) Binding decision - the arbitrator's award is usually final with very limited appeal rights, (3) Faster resolution - generally quicker than litigation, (4) Less formal - more flexible rules of evidence and procedure than courts, (5) Expert decision-makers - parties can choose arbitrators with relevant expertise. Arbitration can be voluntary (parties agree after dispute arises) or mandatory (required by a pre-existing contract clause). Common in employment contracts, consumer agreements, and commercial disputes. Advantages include speed, cost-effectiveness, and privacy. Disadvantages include limited appeal options, potentially high arbitrator fees, and possible power imbalances in mandatory arbitration clauses."
+  },
+  {
+    "instruction": "What does 'jurisdiction' mean in law?",
+    "input": "",
+    "output": "Jurisdiction is the official power of a court or government agency to make legal decisions and judgments. There are several types: (1) Subject matter jurisdiction - authority over the type of case (e.g., criminal vs. civil, federal vs. state issues), (2) Personal jurisdiction - authority over the parties involved, typically based on their location or contacts with the forum, (3) Territorial jurisdiction - authority within a specific geographic area. Courts must have both subject matter and personal jurisdiction to hear a case. Federal courts have limited jurisdiction over specific matters like federal law questions and diversity cases (disputes between citizens of different states exceeding $75,000). State courts generally have broader jurisdiction. Jurisdiction determines where a case can be filed and heard. Disputes about jurisdiction can significantly affect case strategy and outcomes. International cases involve additional complexity with questions of which country's courts and laws apply."
+  },
+  {
+    "instruction": "Explain what 'consideration' means in contract law.",
+    "input": "",
+    "output": "Consideration is something of value exchanged between parties that makes a contract legally enforceable. It's one of the essential elements of a valid contract. Consideration must be: (1) Something of legal value - can be money, goods, services, a promise to do something, or a promise to refrain from doing something, (2) Bargained for - exchanged as part of the agreement, not a gift, (3) Present or future - past consideration (something already done before the contract) generally doesn't count. Both parties must provide consideration for a contract to be binding - this is called 'mutuality of obligation.' The consideration doesn't need to be equal in value (courts don't evaluate fairness of the exchange), but it must have some value. For example, in a home sale, the buyer's consideration is money and the seller's consideration is the property. Without consideration, an agreement is typically just a gratuitous promise that cannot be legally enforced."
+  },
+  {
+    "instruction": "What is indemnification?",
+    "input": "",
+    "output": "Indemnification is a contractual obligation where one party agrees to compensate another for losses, damages, or liabilities that may arise from specified events or actions. In simple terms, it's a promise to 'make someone whole' if something goes wrong. Key aspects include: (1) Indemnitor - the party providing the indemnification (pays for losses), (2) Indemnitee - the party receiving protection (gets compensated), (3) Scope - what types of losses are covered (legal fees, damages, settlements, etc.), (4) Triggers - what events activate the indemnification obligation. Common uses include: vendor contracts (vendor indemnifies client for IP infringement), leases (tenant indemnifies landlord for injuries on premises), and service agreements. Indemnification clauses should specify: what's covered, any monetary caps or limitations, whether it includes legal defense costs, and any exclusions. It's broader than insurance - while insurance involves a third-party insurer, indemnification is a direct contractual promise between parties."
+  }
+]

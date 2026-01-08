@@ -1,0 +1,95 @@
+# Legal Policy Explainer - Configuration
+
+# Model Settings
+model:
+  provider: "openai"  # Options: openai, anthropic, huggingface
+  name: "gpt-3.5-turbo"  # Base model name
+  temperature: 0.3  # Lower temperature for more consistent legal explanations
+  max_tokens: 2000
+  fine_tuned_model_path: "./models/legal_explainer_lora"
+
+# RAG Settings
+rag:
+  vector_db: "chromadb"  # Options: chromadb, faiss
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  chunk_size: 500
+  chunk_overlap: 50
+  top_k: 5  # Number of documents to retrieve
+  similarity_threshold: 0.7
+  db_path: "./data/vector_db"
+
+# Fine-tuning Settings
+fine_tuning:
+  method: "lora"  # Options: lora, qlora, full
+  base_model: "meta-llama/Llama-2-7b-chat-hf"
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.1
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  num_epochs: 3
+  max_seq_length: 2048
+  use_4bit: true
+  use_8bit: false
+
+# Multi-Agent Settings
+agents:
+  researcher:
+    role: "Legal Document Researcher"
+    temperature: 0.2
+    max_tokens: 1500
+  explainer:
+    role: "Legal Policy Explainer"
+    temperature: 0.4
+    max_tokens: 2000
+  coordinator:
+    enable: true
+    max_iterations: 3
+
+# Tools Settings
+tools:
+  enable_document_search: true
+  enable_statute_lookup: true
+  enable_definition_lookup: true
+  external_apis:
+    legal_dictionary_api: null  # Add API endpoint if available
+    case_law_api: null
+
+# Evaluation Settings
+evaluation:
+  test_set_path: "./data/test_cases/test_queries.json"
+  metrics: ["correctness", "clarity", "relevance", "safety"]
+  human_eval_sample_size: 20
+  automated_eval: true
+
+# Safety and Ethics Settings
+safety:
+  enable_disclaimer: true
+  disclaimer_text: "⚠️ DISCLAIMER: This is general information only, not legal advice. Consult a qualified attorney for specific legal matters."
+  refusal_phrases:
+    - "I cannot provide specific legal advice"
+    - "I recommend consulting a qualified attorney"
+    - "This is for informational purposes only"
+  blocked_topics:
+    - "advice on pending litigation"
+    - "prediction of case outcomes"
+    - "circumventing laws"
+  content_filtering: true
+
+# Document Corpus Settings
+corpus:
+  documents_path: "./data/documents/"
+  supported_formats: ["pdf", "txt", "docx"]
+  preprocess: true
+  language: "en"
+
+# Application Settings
+app:
+  interface: "cli"  # Options: cli, web, api
+  host: "0.0.0.0"
+  port: 8000
+  log_level: "INFO"
+  save_conversations: true
+  conversations_path: "./data/conversations/"

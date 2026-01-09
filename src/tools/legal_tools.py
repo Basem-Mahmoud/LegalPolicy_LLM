@@ -153,6 +153,13 @@ class LegalTools:
         if not self.vector_store:
             return "Document search is not available. Vector store not initialized."
 
+        # Convert top_k to int if it's a string (from LLM tool calls)
+        if isinstance(top_k, str):
+            try:
+                top_k = int(top_k)
+            except ValueError:
+                top_k = 3  # Default fallback
+
         logger.info(f"Searching documents for: {query}")
 
         results = self.vector_store.search(query, top_k=top_k)

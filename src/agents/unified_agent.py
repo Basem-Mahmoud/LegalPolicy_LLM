@@ -12,6 +12,7 @@ import operator
 from .query_router import QueryRouter, QueryComplexity
 from ..llm.ollama_client import OllamaClient
 from ..rag.rag_retriever import RAGRetriever
+from ..tools.legal_tools import LegalTools
 from ..prompts.system_prompts import UNIFIED_AGENT_PROMPT
 
 logger = logging.getLogger(__name__)
@@ -65,6 +66,10 @@ class UnifiedLegalAgent:
         self.query_router = query_router or QueryRouter(
             llm_client=llm_client, use_llm_classification=True
         )
+
+        # Initialize legal tools
+        vector_store = rag_retriever.vector_store if rag_retriever else None
+        self.legal_tools = LegalTools(vector_store=vector_store)
 
         # Build the agent graph
         self.graph = self._build_graph()
@@ -289,19 +294,28 @@ Provide a clear, accurate explanation based on the documents above."""
             context = ""
             state["retrieved_context"] = ""
 
-        # TODO: Add tool calling logic here when tools are implemented
-        # For now, process similar to medium path but with more detailed analysis
+        # Tool calling logic
+        tool_context = ""
+        if self.enable_tools and state["requires_tools"]:
+            tool_context = self._execute_tools(query, state)
+
+        # Build comprehensive prompt with all context
+        context_parts = []
 
         if context:
-            user_message = f"""Based on the following legal documents, provide a comprehensive analysis for the user's question.
+            context_parts.append(f"=== Legal Documents Context ===\n{context}")
 
-{context}
+        if tool_context:
+            context_parts.append(f"\n=== Tool Results ===\n{tool_context}")
+
+        if context_parts:
+            user_message = f"""{chr(10).join(context_parts)}
 
 User Question: {query}
 
 Provide a detailed, well-structured analysis that:
 1. Addresses all aspects of the question
-2. Cites relevant information from the documents
+2. Cites relevant information from the documents and tool results
 3. Explains implications and connections
 4. Uses clear legal reasoning"""
         else:
@@ -316,6 +330,94 @@ Provide a detailed, well-structured analysis that:
         state["response"] = response
 
         return state
+
+    def _execute_tools(self, query: str, state: AgentState) -> str:
+        """
+        Execute tools based on LLM's tool calling decisions.
+
+        Args:
+            query: User's query
+            state: Current agent state
+
+        Returns:
+            Formatted tool results
+        """
+        logger.info("Initiating tool calling")
+
+        try:
+            # Get tool definitions
+            tools = self.legal_tools.get_tool_definitions()
+
+            # Prepare messages for tool calling
+            messages = [
+                {"role": "system", "content": UNIFIED_AGENT_PROMPT},
+                {
+                    "role": "user",
+                    "content": f"""Analyze this legal query and determine which tools (if any) should be called to answer it comprehensively.
+
+Query: {query}
+
+You have access to these tools:
+1. search_legal_documents - Search the legal document database
+2. get_legal_definition - Get definitions of legal terms
+3. check_statute_reference - Look up specific statutes
+
+Decide which tools to call based on the query.""",
+                },
+            ]
+
+            # Call LLM with tools
+            response = self.llm_client.generate_with_tools(
+                messages=messages, tools=tools, temperature=0.3
+            )
+
+            # Check if LLM requested tool calls
+            if "message" in response and "tool_calls" in response["message"]:
+                tool_calls = response["message"]["tool_calls"]
+
+                if not tool_calls:
+                    logger.info("No tools called by LLM")
+                    return ""
+
+                logger.info(f"LLM requested {len(tool_calls)} tool call(s)")
+
+                # Execute each tool call
+                tool_results = []
+                for tool_call in tool_calls:
+                    tool_name = tool_call["function"]["name"]
+                    tool_args = tool_call["function"]["arguments"]
+
+                    logger.info(f"Executing tool: {tool_name} with args: {tool_args}")
+
+                    # Execute the tool
+                    result = self.legal_tools.execute_tool(tool_name, tool_args)
+
+                    # Store result
+                    tool_result = {
+                        "tool": tool_name,
+                        "arguments": tool_args,
+                        "result": result,
+                    }
+                    tool_results.append(tool_result)
+                    state["tool_results"].append(tool_result)
+
+                # Format tool results for LLM context
+                formatted_results = []
+                for tr in tool_results:
+                    formatted_results.append(
+                        f"Tool: {tr['tool']}\nArguments: {tr['arguments']}\nResult:\n{tr['result']}\n"
+                    )
+
+                return "\n---\n".join(formatted_results)
+
+            else:
+                logger.info("LLM response did not include tool calls")
+                return ""
+
+        except Exception as e:
+            logger.error(f"Error in tool execution: {e}")
+            # Don't fail the entire query if tools fail
+            return f"Note: Tool execution encountered an error: {str(e)}"
 
     def _add_disclaimer(self, state: AgentState) -> AgentState:
         """
